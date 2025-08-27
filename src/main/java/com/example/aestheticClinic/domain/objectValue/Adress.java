@@ -8,16 +8,16 @@ public class Adress {
     private String neighborhood;
     private String city;
     private String state;
-    private String CEP;
+    private String cep;
 
-    public Adress(String street, String number, String neighborhood, String city, String state, String CEP) {
-        Stream.of(street, number, neighborhood, city, state, CEP)
+    public Adress(String street, String number, String neighborhood, String city, String state, String cep) {
+        Stream.of(street, number, neighborhood, city, state, cep)
                 .forEach(field -> {
                             if (field == null || field.isEmpty()) {
                                 throw new IllegalArgumentException("state,number,neighborhood,city,state or CEP cant be null or empty");
                             }
-                            if (field.equals(CEP)) {
-                                if (!field.matches("^d{2}[\\s-]?\\d{3}[\\s-]?\\d{3}$")) {
+                            if (field.equals(cep)) {
+                                if (!field.matches("^\\d{2}[\\s-]?\\d{3}[\\s-]?\\d{3}$")) {
                                     throw new IllegalArgumentException("CEP format doesnt matches");
                                 }
                             }
@@ -28,7 +28,7 @@ public class Adress {
         this.neighborhood = neighborhood;
         this.city = city;
         this.state = state;
-        this.CEP = CEP;
+        this.cep = cep;
     }
 
     public String getStreet() {
@@ -56,9 +56,8 @@ public class Adress {
     }
 
 
-    public String getCEP() {
-        return CEP;
+    public String getCep() {
+
+        return cep;
     }
-
-
 }

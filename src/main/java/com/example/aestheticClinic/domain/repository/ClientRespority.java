@@ -11,5 +11,6 @@ public interface ClientRespority {
 
     Optional<Client> findByCpf(CPF cpf);
     Optional<Client> findByEmail(Email email);
-    Optional<Client> findByCellPhoneNumber(CellPhoneNumber number);
+    Optional<Client> findByCellphoneNumber(CellPhoneNumber number);
+    Client save(Client client);
 }

@@ -45,7 +45,7 @@ public class SecurityConfig {
     @Order(0)
     public SecurityFilterChain publicEndpoints(HttpSecurity http) throws Exception {
         http
-                .securityMatcher("/user/**")
+                .securityMatcher("/user/**","/client/**")
                 .authorizeHttpRequests(a -> a.anyRequest().permitAll())
                 .csrf(csrf -> csrf.disable());
         return http.build();
@@ -68,8 +68,6 @@ public class SecurityConfig {
                         authorize
                                 .anyRequest().authenticated()
                 )
-                // Redirect to the login page when not authenticated from the
-                // authorization endpoint
                 .exceptionHandling((exceptions) -> exceptions
                         .defaultAuthenticationEntryPointFor(
                                 new LoginUrlAuthenticationEntryPoint("/login"),
@@ -86,7 +84,7 @@ public class SecurityConfig {
             throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/login","/error","/user/**").permitAll()
+                        .requestMatchers("/login","/error","/user/**","/client/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form ->
@@ -101,8 +99,9 @@ public class SecurityConfig {
     public RegisteredClientRepository registeredClientRepository() {
         RegisteredClient oidcClient = RegisteredClient.withId(UUID.randomUUID().toString())
                 .clientId("aestheticclinic")
-                .clientSecret("aestheticclinicsecret")
+                .clientSecret(passwordEncoder().encode("aestheticclinicsecret"))
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .redirectUri("http://127.0.0.1:8080/login/oauth2/code/aestheticclinic")

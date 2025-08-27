@@ -15,6 +15,7 @@ import lombok.Generated;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @AllArgsConstructor
@@ -26,7 +27,7 @@ public class ClientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @NotNull
-    private Long clientId;
+    private UUID clientId;
 
     @NotBlank
     private String name;

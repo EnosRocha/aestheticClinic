@@ -6,6 +6,7 @@ import com.example.aestheticClinic.domain.objectValue.CPF;
 import com.example.aestheticClinic.domain.objectValue.CellPhoneNumber;
 import com.example.aestheticClinic.domain.objectValue.Email;
 import com.example.aestheticClinic.domain.repository.ClientRespority;
+import com.example.aestheticClinic.infrastructure.mappers.ClientEntityMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -15,20 +16,32 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ClientRepositoryImpl implements ClientRespority {
 
-    private ClientApplicationMapper
+    private final ClientEntityMapper clientEntityMapper;
+    private final ClientJpaRepository clientJpaRepository;
+
 
     @Override
     public Optional<Client> findByCpf(CPF cpf) {
-        return Optional.empty();
+
+        return clientJpaRepository.findByCpf(cpf.getNumber()).map(clientEntityMapper::toDomain);
     }
 
     @Override
     public Optional<Client> findByEmail(Email email) {
-        return Optional.empty();
+
+        return clientJpaRepository.findByEmail(email.getValue()).map(clientEntityMapper::toDomain);
     }
 
     @Override
-    public Optional<Client> findByCellPhoneNumber(CellPhoneNumber number) {
-        return Optional.empty();
+    public Client save(Client client) {
+        ClientEntity clientEntity = clientEntityMapper.toEntity(client);
+        ClientEntity clientEntityResponse =  clientJpaRepository.save(clientEntity);
+        return clientEntityMapper.toDomain(clientEntityResponse);
+    }
+
+    @Override
+    public Optional<Client> findByCellphoneNumber(CellPhoneNumber number) {
+
+        return clientJpaRepository.findByCellphoneNumber(number.getNumber()).map(clientEntityMapper::toDomain);
     }
 }

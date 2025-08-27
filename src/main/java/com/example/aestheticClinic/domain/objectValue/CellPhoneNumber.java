@@ -7,7 +7,7 @@ public class CellPhoneNumber {
 
     public CellPhoneNumber(String number) {
         Objects.requireNonNull(number,"cellphone number cant be null");
-        if(!number.matches("^\\(?\\d{2}\\)?\\s?\\d{4,5}[\\s-]?\\d{4}$")){
+        if(!number.matches("^\\d{10,11}$")){
             throw new IllegalArgumentException("cellphone format doesnt matches");
         }
         this.number = number;

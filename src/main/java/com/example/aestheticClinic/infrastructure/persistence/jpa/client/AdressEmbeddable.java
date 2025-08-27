@@ -15,5 +15,5 @@ public class AdressEmbeddable {
     private String neighborhood;
     private String city;
     private String state;
-    private String CEP;
+    private String cep;
 }
