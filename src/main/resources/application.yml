@@ -13,7 +13,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3310/aesthetic
     username: enos
-    password: 
+    password: Enos!2486
 
 
   security:

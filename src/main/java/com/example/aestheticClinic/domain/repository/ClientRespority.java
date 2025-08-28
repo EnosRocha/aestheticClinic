@@ -5,12 +5,13 @@ import com.example.aestheticClinic.domain.objectValue.CPF;
 import com.example.aestheticClinic.domain.objectValue.CellPhoneNumber;
 import com.example.aestheticClinic.domain.objectValue.Email;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ClientRespority {
 
     Optional<Client> findByCpf(CPF cpf);
     Optional<Client> findByEmail(Email email);
-    Optional<Client> findByCellphoneNumber(CellPhoneNumber number);
+    List<Client> findByCellphoneNumber(CellPhoneNumber number);
     Client save(Client client);
 }

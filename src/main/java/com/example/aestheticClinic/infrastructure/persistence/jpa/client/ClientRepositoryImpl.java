@@ -10,7 +10,9 @@ import com.example.aestheticClinic.infrastructure.mappers.ClientEntityMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -35,13 +37,12 @@ public class ClientRepositoryImpl implements ClientRespority {
     @Override
     public Client save(Client client) {
         ClientEntity clientEntity = clientEntityMapper.toEntity(client);
-        ClientEntity clientEntityResponse =  clientJpaRepository.save(clientEntity);
+        ClientEntity clientEntityResponse = clientJpaRepository.save(clientEntity);
         return clientEntityMapper.toDomain(clientEntityResponse);
     }
 
     @Override
-    public Optional<Client> findByCellphoneNumber(CellPhoneNumber number) {
-
-        return clientJpaRepository.findByCellphoneNumber(number.getNumber()).map(clientEntityMapper::toDomain);
+    public List<Client> findByCellphoneNumber(CellPhoneNumber number) {
+        return clientJpaRepository.findByCellphoneNumber(number.getNumber()).stream().map(clientEntityMapper::toDomain).collect(Collectors.toList());
     }
 }
